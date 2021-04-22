@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+</head>
+<body>
+<div class="row" style="height: 50px"></div>
+<h2 class="text-center">通讯服务器后台配置</h2>
+<div class="row border border-primary main-content">
+    <div class="col-md-2">
+        <ul class="list-group nav-fill" id="myTab">
+            <li>
+                <a href="#mySystem" class="list-group-item list-group-item-action" data-toggle="tab"
+                   onclick="networkStatus()">系统状态</a>
+            </li>
+            <li>
+                <a href="#message" class="list-group-item list-group-item-action" data-toggle="tab"
+                   onclick="dataCount()">数据包查看</a>
+            </li>
+            <li>
+                <a href="#parameter" class="list-group-item list-group-item-action" data-toggle="tab"
+                   onclick="getConfig()">参数配置值</a>
+            </li>
+            <li>
+                <a href="#log" class="list-group-item list-group-item-action" data-toggle="tab"
+                   onclick="getLog()">日志查看</a>
+            </li>
+            <li>
+                <a href="#version" class="list-group-item list-group-item-action" data-toggle="tab"
+                   onclick="systemInfo()">版本查看</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="mySystem">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h1><label>系统服务：</label><label id="system-service">运行</label></h1>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <h1><label>网络状态：</label><label id="network-status"></label></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="message">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h1><label>当前队列中的消息个数：</label><label id="message-count"></label></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="parameter">
+                <table>
+                    <form action="/saveConfig" method="post" id="config-form">
+                        <tr>
+                            <td class="text-right"><label>本地端口:</label></td>
+                            <td><input type="text" class="form-control" id="local-port" name="localPort"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label>云服务器:</label></td>
+                            <td><input type="text" class="form-control" id="cloud-service-address" name="cloudAddress">
+                            </td>
+                            <td><label>端口:</label></td>
+                            <td><input type="text" class="form-control" id="cloud-service-port" name="cloudPort"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label>传送的频率:</label></td>
+                            <td><input type="text" class="form-control" id="frequency" name="frequency"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><label>共享秘钥:</label></td>
+                            <td><input type="text" class="form-control" id="my-key" name="myKey"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <button type="button" class="btn btn-primary" onclick="saveConfig()">确定</button>
+                            </td>
+                            <td colspan="2" class="text-center">
+                                <button type="reset" class="btn">重置</button>
+                            </td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="log">
+                <div class="form-group">
+                    <label for="log-message" class="col-md-2">当天日志:</label>
+                    <textarea class="form-control" rows="20" id="log-message" readonly="readonly"></textarea>
+                    <a href="/download">
+                        <button class="btn btn-primary btn-block" style="margin-top: 20px">下载</button>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="version">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h1><label>当前的操作系统：</label><label id="operation-system"></label></h1>
+                        <h1><label>当前系统版本：</label><label id="system-version"></label></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
