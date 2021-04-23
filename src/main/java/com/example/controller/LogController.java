@@ -57,14 +57,14 @@ public class LogController {
         if (file.exists()) {
             //下载显示的文件名，解决中文名称乱码问题
             String userAgent = request.getHeader("user-agent").toLowerCase();
-            String downloadFielName;
+            String downloadFileName;
 
             if (userAgent.contains("msie") || userAgent.contains("like gecko")) {
-                downloadFielName = URLEncoder.encode((fileName), "UTF-8");
+                downloadFileName = URLEncoder.encode((fileName), "UTF-8");
             } else {
-                downloadFielName = new String((fileName).getBytes("UTF-8"), "iso-8859-1");
+                downloadFileName = new String((fileName).getBytes("UTF-8"), "iso-8859-1");
             }
-            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + downloadFielName);
+            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + downloadFileName);
             headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
 
         } else {
