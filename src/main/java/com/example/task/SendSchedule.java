@@ -48,6 +48,10 @@ public class SendSchedule implements SchedulingConfigurer {
         this.assetsService = assetsService;
     }
 
+    /**
+     * 向与服务器发送数据
+     * @param scheduledTaskRegistrar 定时任务注册对象
+     */
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
 

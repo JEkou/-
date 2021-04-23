@@ -18,6 +18,10 @@ public class MessageController {
         this.assetsService = assetsService;
     }
 
+    /**
+     * 获取所有暂时没有发送到云服务器数据的数量
+     * @return 数据的数量。没有则返回0
+     */
     @PostMapping(value = "/getMessageCount")
     public int getNotSendMessageCount(){
         return assetsService.getNotSendAssetMessageCount();

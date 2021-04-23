@@ -20,6 +20,11 @@ public class ReportService {
         this.reportRepository = reportRepository;
     }
 
+    /**
+     * 保存Report信息
+     * @param report Report信息
+     * @return 成功返回1；失败返回-1
+     */
     @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
     public int saveReport(Report report) {

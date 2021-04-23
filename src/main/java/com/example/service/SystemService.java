@@ -24,6 +24,10 @@ public class SystemService {
         this.systemRepository = systemRepository;
     }
 
+    /**
+     * 获取系统的配置
+     * @return 配置信息
+     */
     public Config getSystemConfig() {
         Config config = new Config();
         List<Config> configList = systemRepository.getByIsDelete(BaseEntity.NOTDELETE);
@@ -33,10 +37,19 @@ public class SystemService {
         return config;
     }
 
+    /**
+     * 获取中转系统的版本号
+     * @return 版本号
+     */
     public String getSystemVersionNumber(){
         return getSystemConfig().getVersionNumber();
     }
 
+    /**
+     *
+     * @param config 配置信息
+     * @return 结果。
+     */
     @Modifying(flushAutomatically = true,clearAutomatically = true)
     @Transactional(rollbackFor = {RuntimeException.class, Error.class})
     public int saveConfig(Config config){

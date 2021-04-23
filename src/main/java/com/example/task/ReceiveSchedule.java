@@ -27,9 +27,17 @@ import java.util.List;
 @Component
 @EnableScheduling
 public class ReceiveSchedule implements SchedulingConfigurer {
-
+    /**
+     * 默认接收数据的时间间隔
+     */
     private int timer = 500;
+    /**
+     * 默认接收数据的接口号
+     */
     private int inetSocketAddress = 888;
+    /**
+     * 默认连接超时时间
+     */
     private int timeOut = 3000;
 
     Logger logger = LoggerFactory.getLogger(getClass());
@@ -42,12 +50,17 @@ public class ReceiveSchedule implements SchedulingConfigurer {
         this.reportService = reportService;
     }
 
+    /**
+     * 定时接收数据方法
+     *
+     * @param scheduledTaskRegistrar 定时任务注册对象
+     */
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
         scheduledTaskRegistrar.addTriggerTask(() -> {
 
             Report report = receiveReport();
-            if(report != null) {
+            if (report != null) {
                 System.out.println("----shoudao----");
                 //logger.debug("接收到");
                 reportService.saveReport(report);
@@ -60,8 +73,11 @@ public class ReceiveSchedule implements SchedulingConfigurer {
         });
     }
 
-
-    private Report receiveReport(){
+    /**
+     * 接收数据，并对数据进行处理的主要方法.
+     * @return 接收数据解析后的Report对象.
+     */
+    private Report receiveReport() {
         Report report = null;
         DatagramChannel channel = null;
         try {
@@ -80,7 +96,7 @@ public class ReceiveSchedule implements SchedulingConfigurer {
             int head2 = buffer.get() & 0xFF;
 
             if (head1 == 0xFA) {
-                byte ip1 = buffer.get(),ip2 = buffer.get(),ip3 = buffer.get(),ip4 = buffer.get();
+                byte ip1 = buffer.get(), ip2 = buffer.get(), ip3 = buffer.get(), ip4 = buffer.get();
                 int length = buffer.getChar();
 
                 System.out.println(buffer);
@@ -105,12 +121,12 @@ public class ReceiveSchedule implements SchedulingConfigurer {
                                     int currentPower = buffer.getInt();
                                     int ratePower = buffer.getInt();
 
-                                    Asset asset = new Asset(id + "",rssI + "",status + "",volt + "",amp + "",currentPower + "",ratePower + "");
+                                    Asset asset = new Asset(id + "", rssI + "", status + "", volt + "", amp + "", currentPower + "", ratePower + "");
                                     assetList.add(asset);
                                 }
                             }
                         }
-                        Localize localize = new Localize(localizeId + "",localizeStatus,localizeLength,assetList);
+                        Localize localize = new Localize(localizeId + "", localizeStatus, localizeLength, assetList);
                         for (Asset asset : assetList) {
                             asset.setLocalize(localize);
                         }

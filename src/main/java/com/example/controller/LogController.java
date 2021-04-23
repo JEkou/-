@@ -22,6 +22,11 @@ import java.util.zip.GZIPInputStream;
 @RestController
 public class LogController {
 
+    /**
+     * 获取日志信息
+     * @param data 日志的日期，以yyyy-mm-dd的格式输出
+     * @return 日志的内容
+     */
     @GetMapping("/log")
     public String getLog(String data) {
         List<String> lines = new ArrayList();
@@ -49,8 +54,14 @@ public class LogController {
         return lines.toString();
     }
 
+    /**
+     * 下载日志文件
+     * @param request 系统的请求对象，获取请求的参数
+     * @return 日志文件的二进制数据
+     * @throws IOException I/O异常,包括编码不支持异常、文件没找到异常
+     */
     @GetMapping("/download")
-    public ResponseEntity<byte[]> downLoad(HttpServletRequest request) throws Exception {
+    public ResponseEntity<byte[]> downLoad(HttpServletRequest request) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         File file = new File("log/spring.log");
         String fileName = file.getName();
@@ -75,6 +86,11 @@ public class LogController {
 
     }
 
+    /**
+     * 将数据添加到list
+     * @param lines 保存的列表
+     * @param sc 数据源
+     */
     private void addContentToList(List<String> lines,Scanner sc){
         while (sc.hasNextLine()) {
             lines.add(sc.nextLine()+"\r\n");
